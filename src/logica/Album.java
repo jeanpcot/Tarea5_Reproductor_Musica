@@ -14,7 +14,7 @@ public class Album {
         this.artistas = artistas;
         this.añoLanzamiento = añoLanzamiento;
         this.disquera = disquera;
-
+        canciones = new ArrayList<>();
     }
 
     public Album(){}

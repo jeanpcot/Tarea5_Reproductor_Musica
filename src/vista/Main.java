@@ -37,9 +37,7 @@ public class Main {
 
                     Cancion cancionCreada = crearCancion(scanner);
 
-                    Cancion cancion = new Cancion(cancionCreada.titulo(), cancionCreada.duracion());
-
-                    albumes.get(numeroAlbum).agregarCancion(cancion);
+                    albumes.get(numeroAlbum).agregarCancion(cancionCreada);
                     break;
                 case 3:
                     mostrarAlbumes();
@@ -88,9 +86,6 @@ public class Main {
         return cancionCreada;
     }
 
-    private record Cancion(String titulo, int[] duracion) {
-    }
-
     private static void mostrarAlbumes() {
         for (int i = 0; i < albumes.size(); i++) {
             System.out.println(albumes.get(i).toString());
@@ -113,8 +108,6 @@ public class Main {
         return albumCreado;
     }
 
-    private record Album(String nombre, String[] artistas, String añoLanzamiento, String disquera) {
-    }
 
     private static void mostrarMenu() {
         System.out.println("""

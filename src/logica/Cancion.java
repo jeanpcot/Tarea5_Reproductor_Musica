@@ -1,5 +1,7 @@
 package logica;
 
+import java.util.Arrays;
+
 public class Cancion {
     private String titulo;
     private int[] duracion;
@@ -16,5 +18,13 @@ public class Cancion {
 
     public int obtenerSegundos() {
         return duracion[1];
+    }
+
+    @Override
+    public String toString() {
+        return "Cancion{" +
+                "titulo='" + titulo + '\'' +
+                ", duracion=" + Arrays.toString(duracion) +
+                '}';
     }
 }
