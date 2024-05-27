@@ -11,6 +11,9 @@ public class Cancion {
         this.duracion = duracion;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
 
     public int obtenerMinutos() {
         return duracion[0];

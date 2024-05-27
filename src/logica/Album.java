@@ -19,9 +19,6 @@ public class Album {
 
     public Album(){}
 
-    public void agregarCancion(Cancion cancion){
-        canciones.add(cancion);
-    }
 
     @Override
     public String toString() {
@@ -60,5 +57,24 @@ public class Album {
     public String getAño() {
 
         return añoLanzamiento;
+    }
+    public boolean existeCancionEnElAlbum(Cancion cancion) {
+        for (Cancion c : this.getCanciones()) {
+            if (c.getTitulo().equalsIgnoreCase(cancion.getTitulo())) {
+                return true; // Si existe no se agrega
+            }
+        }
+        return false; // La canción no existe en el album
+    }
+    public void agregarCancion(Cancion cancion){
+        if(existeCancionEnElAlbum(cancion)){
+            System.out.println("La cancion: "+cancion.getTitulo()+"ya existe en el album");
+            return;
+        }
+        canciones.add(cancion);
+    }
+
+    public ArrayList<Cancion> getCanciones() {
+        return canciones;
     }
 }
