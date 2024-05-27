@@ -1,9 +1,8 @@
-package vista;
-
 import logica.Album;
 import logica.Cancion;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -11,68 +10,82 @@ public class Main {
 
     public static void main(String[] args) {
         boolean continuar = true;
+        Scanner scanner = new Scanner(System.in);
+
         do {
             mostrarMenu();
-            Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Ingrese la opción que desee:");
-            int opcion = Integer.parseInt(scanner.nextLine());
+            try {
+                System.out.print("Ingrese la opción que desee:");
+                int opcion = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
 
-            switch (opcion) {
-                case 0:
-                    continuar = false;
-                    break;
-                case 1:
-                    Album albumCreado = crearAlbum(scanner);
-
-                    albumes.add(albumCreado);
-
-                    System.out.println("Álbum creado exitosamente!");
-                    break;
-                case 2:
-                    mostrarAlbumes();
-
-                    System.out.println("Elija el album en que va a agregar la música:");
-                    int numeroAlbum = Integer.parseInt(scanner.nextLine());
-
-                    Cancion cancionCreada = crearCancion(scanner);
-
-                    albumes.get(numeroAlbum).agregarCancion(cancionCreada);
-                    break;
-                case 3:
-                    mostrarAlbumes();
-
-                    System.out.println("Elija el album que desea ver sus musicas:");
-                    Album albumAuxiliar = albumes.get(scanner.nextInt());
-
-                    albumAuxiliar.obtenerListaDeMusicas();
-                    albumAuxiliar.obtenerDuracionTotal();
-
-                    break;
-                case 4:
-                    System.out.println("Por favor, introduce el año del álbum:");
-                    String año = scanner.nextLine();
-
-                    Album albumAux = null;
-
-                    for (int i = 0; i < albumes.size(); i++) {
-                        if (año.equals(albumes.get(i).getAño())) {
-                            albumAux = albumes.get(i);
-                            break;
-                        }
-                    }
-
-                    if (albumAux == null) {
-                        System.out.println("El album no existe");
+                switch (opcion) {
+                    case 0:
+                        continuar = false;
                         break;
-                    }
+                    case 1:
+                        Album albumCreado = crearAlbum(scanner);
+                        albumes.add(albumCreado);
+                        System.out.println("Álbum creado exitosamente!");
+                        break;
+                    case 2:
+                        mostrarAlbumes();
+                        System.out.println("Elija el álbum en que va a agregar la música:");
+                        int numeroAlbum = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
 
-                    System.out.println(albumAux);
+                        if (numeroAlbum >= 0 && numeroAlbum < albumes.size()) {
+                            Cancion cancionCreada = crearCancion(scanner);
+                            albumes.get(numeroAlbum).agregarCancion(cancionCreada);
+                        } else {
+                            System.out.println("Número de álbum inválido.");
+                        }
+                        break;
+                    case 3:
+                        mostrarAlbumes();
+                        System.out.println("Elija el álbum que desea ver sus músicas:");
+                        int numeroAlbumConsulta = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
 
-                    break;
+                        if (numeroAlbumConsulta >= 0 && numeroAlbumConsulta < albumes.size()) {
+                            Album albumAuxiliar = albumes.get(numeroAlbumConsulta);
+                            albumAuxiliar.obtenerListaDeMusicas();
+                            albumAuxiliar.obtenerDuracionTotal();
+                        } else {
+                            System.out.println("Número de álbum inválido.");
+                        }
+                        break;
+                    case 4:
+                        System.out.println("Por favor, introduce el año del álbum:");
+                        String año = scanner.nextLine();
+
+                        Album albumAux = null;
+
+                        for (int i = 0; i < albumes.size(); i++) {
+                            if (año.equals(albumes.get(i).getAño())) {
+                                albumAux = albumes.get(i);
+                                break;
+                            }
+                        }
+
+                        if (albumAux == null) {
+                            System.out.println("El álbum no existe");
+                        } else {
+                            System.out.println(albumAux);
+                        }
+                        break;
+                    default:
+                        System.out.println("Opción no válida. Por favor, ingrese un número válido del menú.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Opción no válida. Por favor, ingrese un número válido del menú.");
+                scanner.nextLine(); // Clear the invalid input
             }
+
         } while (continuar);
 
+        scanner.close(); // Close the scanner to prevent resource leak
     }
 
     private static Cancion crearCancion(Scanner scanner) {
@@ -82,8 +95,7 @@ public class Main {
         System.out.println("Por favor, introduce la duración de la canción en minutos y segundos (separados por un espacio):");
         String[] duracionStr = scanner.nextLine().split(" ");
         int[] duracion = {Integer.parseInt(duracionStr[0]), Integer.parseInt(duracionStr[1])};
-        Cancion cancionCreada = new Cancion(titulo, duracion);
-        return cancionCreada;
+        return new Cancion(titulo, duracion);
     }
 
     private static void mostrarAlbumes() {
@@ -104,18 +116,16 @@ public class Main {
 
         System.out.println("Por favor, introduce la disquera del álbum:");
         String disquera = scanner.nextLine();
-        Album albumCreado = new Album(nombre, artistas, añoLanzamiento, disquera);
-        return albumCreado;
+        return new Album(nombre, artistas, añoLanzamiento, disquera);
     }
-
 
     private static void mostrarMenu() {
         System.out.println("""
                 Opciones:
-                    1. Agregar album
-                    2. Agregar musica
-                    3. Listar musicas de un album
-                    4. Buscar album por año
+                    1. Agregar álbum
+                    2. Agregar música
+                    3. Listar músicas de un álbum
+                    4. Buscar álbum por año
                     0. Salir
                 """);
     }
