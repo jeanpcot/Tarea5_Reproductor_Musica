@@ -11,6 +11,18 @@ public class Cancion {
         this.duracion = duracion;
     }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    public void setDuracionMinutos(int duracionMinutos) {
+        this.duracion[0] = duracionMinutos;
+    }
+    public void setDuracionSegundos(int duracionSegundos) {
+        this.duracion[1] = duracionSegundos;
+    }
+    public Cancion() {
+    }
+
     public String getTitulo() {
         return titulo;
     }

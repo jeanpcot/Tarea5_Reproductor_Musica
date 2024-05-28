@@ -1,18 +1,19 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Album {
     private String nombre;
-    private String[] artistas;
-    private String añoLanzamiento;
+    private String artistas;
+    private String anioLanzamiento;
     private String disquera;
     private ArrayList<Cancion> canciones;
 
-    public Album(String nombre, String[] artistas, String añoLanzamiento, String disquera) {
+    public Album(String nombre, String artistas, String añoLanzamiento, String disquera) {
         this.nombre = nombre;
         this.artistas = artistas;
-        this.añoLanzamiento = añoLanzamiento;
+        this.anioLanzamiento = añoLanzamiento;
         this.disquera = disquera;
         canciones = new ArrayList<>();
     }
@@ -24,7 +25,7 @@ public class Album {
     public String toString() {
         return "Album{" +
                 "disquera='" + disquera + '\'' +
-                ", añoLanzamiento='" + añoLanzamiento + '\'' +
+                ", añoLanzamiento='" + anioLanzamiento + '\'' +
                 ", nombre='" + nombre + '\'' +
                 '}';
     }
@@ -56,8 +57,25 @@ public class Album {
 
     public String getAño() {
 
-        return añoLanzamiento;
+        return anioLanzamiento;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setArtistas(String artistas) {
+        this.artistas = artistas;
+    }
+
+    public void setAnioLanzamiento(String anioLanzamiento) {
+        this.anioLanzamiento = anioLanzamiento;
+    }
+
+    public void setDisquera(String disquera) {
+        this.disquera = disquera;
+    }
+
     public boolean existeCancionEnElAlbum(Cancion cancion) {
         for (Cancion c : this.getCanciones()) {
             if (c.getTitulo().equalsIgnoreCase(cancion.getTitulo())) {
@@ -73,6 +91,23 @@ public class Album {
         }
         canciones.add(cancion);
     }
+    public Cancion llenarCancion(){
+        Scanner scanner = new Scanner(System.in);
+        Cancion cancion = new Cancion();
+        System.out.println("Ingrese el titulo: ");
+        cancion.setTitulo(scanner.nextLine());
+        System.out.println("Ingrese la duracion en minutos: ");
+        cancion.setDuracionMinutos(scanner.nextInt());
+        System.out.println("Ingrese la duracion en segundos: ");
+        cancion.setDuracionSegundos(scanner.nextInt());
+        return cancion;
+    }
+    public void registrarCancion(){
+        Cancion cancion = llenarCancion();
+        agregarCancion(cancion);
+    }
+
+
 
     public ArrayList<Cancion> getCanciones() {
         return canciones;
