@@ -32,7 +32,9 @@ public class Usuario {
         Album album = llenarAlbum();
         agregarAlbum(album);
 
-    }    public void listarAlbumsPorAnio(String anioSolicitado){
+    }
+
+    public void listarAlbumsPorAnio(String anioSolicitado){
         for (Album album : albums) {
             if(album.getAño().equalsIgnoreCase(anioSolicitado)){
                 System.out.println(album);
