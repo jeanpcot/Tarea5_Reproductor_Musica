@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static ArrayList<Album> albumes = new ArrayList();
+    public static ArrayList<Album> albumes = new ArrayList<>();
 
     public static void main(String[] args) {
         boolean continuar = true;
@@ -16,9 +16,9 @@ public class Main {
             mostrarMenu();
 
             try {
-                System.out.print("Ingrese la opción que desee:");
+                System.out.print("Ingrese la opción que desee: ");
                 int opcion = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                scanner.nextLine();
 
                 switch (opcion) {
                     case 0:
@@ -31,25 +31,26 @@ public class Main {
                         break;
                     case 2:
                         mostrarAlbumes();
-                        System.out.println("Elija el álbum en que va a agregar la música:");
+                        System.out.println("Elija el álbum en que va a agregar la música (ingrese el número del álbum):");
                         int numeroAlbum = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
 
-                        if (numeroAlbum >= 0 && numeroAlbum < albumes.size()) {
+                        if (numeroAlbum > 0 && numeroAlbum <= albumes.size()) {
                             Cancion cancionCreada = crearCancion(scanner);
-                            albumes.get(numeroAlbum).agregarCancion(cancionCreada);
+                            albumes.get(numeroAlbum - 1).agregarCancion(cancionCreada);
+                            System.out.println("Canción agregada exitosamente!");
                         } else {
                             System.out.println("Número de álbum inválido.");
                         }
                         break;
                     case 3:
                         mostrarAlbumes();
-                        System.out.println("Elija el álbum que desea ver sus músicas:");
+                        System.out.println("Elija el álbum que desea ver sus músicas (ingrese el número del álbum):");
                         int numeroAlbumConsulta = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
 
-                        if (numeroAlbumConsulta >= 0 && numeroAlbumConsulta < albumes.size()) {
-                            Album albumAuxiliar = albumes.get(numeroAlbumConsulta);
+                        if (numeroAlbumConsulta > 0 && numeroAlbumConsulta <= albumes.size()) {
+                            Album albumAuxiliar = albumes.get(numeroAlbumConsulta - 1);
                             albumAuxiliar.obtenerListaDeMusicas();
                             albumAuxiliar.obtenerDuracionTotal();
                         } else {
@@ -62,9 +63,9 @@ public class Main {
 
                         Album albumAux = null;
 
-                        for (int i = 0; i < albumes.size(); i++) {
-                            if (año.equals(albumes.get(i).getAño())) {
-                                albumAux = albumes.get(i);
+                        for (Album album : albumes) {
+                            if (año.equals(album.getAño())) {
+                                albumAux = album;
                                 break;
                             }
                         }
@@ -80,12 +81,12 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Opción no válida. Por favor, ingrese un número válido del menú.");
-                scanner.nextLine(); // Clear the invalid input
+                scanner.nextLine();
             }
 
         } while (continuar);
 
-        scanner.close(); // Close the scanner to prevent resource leak
+        scanner.close();
     }
 
     private static Cancion crearCancion(Scanner scanner) {
@@ -100,7 +101,7 @@ public class Main {
 
     private static void mostrarAlbumes() {
         for (int i = 0; i < albumes.size(); i++) {
-            System.out.println(albumes.get(i).toString());
+            System.out.println((i + 1) + ". " + albumes.get(i).toString());
         }
     }
 
@@ -109,7 +110,7 @@ public class Main {
         String nombre = scanner.nextLine();
 
         System.out.println("Por favor, introduce los artistas del álbum (separados por comas):");
-        String[] artistas = scanner.nextLine().split(",");
+        String artistas = scanner.nextLine();
 
         System.out.println("Por favor, introduce el año de lanzamiento del álbum:");
         String añoLanzamiento = scanner.nextLine();
