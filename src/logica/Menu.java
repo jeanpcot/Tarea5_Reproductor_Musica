@@ -7,11 +7,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
-    private ArrayList<Album> albumes;
+    private Usuario usuario;
     private Scanner scanner;
 
-    public Menu(ArrayList<Album> albumes, Scanner scanner) {
-        this.albumes = albumes;
+    public Menu(Usuario usuario, Scanner scanner) {
+        this.usuario = usuario;
         this.scanner = scanner;
     }
 
@@ -39,11 +39,12 @@ public class Menu {
                         continuar = false;
                         break;
                     case 1:
-                        Album albumCreado = Usuario.crearAlbum(scanner);
-                        albumes.add(albumCreado);
+                        Album albumCreado = usuario.crearAlbum(scanner);
+                        usuario.agregarAlbum(albumCreado);
                         System.out.println("Álbum creado exitosamente!");
                         break;
                     case 2:
+                        ArrayList<Album> albumes = usuario.getAlbums();
                         Album.mostrarAlbumes(albumes);
                         System.out.println("Elija el álbum en que va a agregar la música (ingrese el número del álbum):");
                         int numeroAlbum = scanner.nextInt();
@@ -56,6 +57,7 @@ public class Menu {
                         }
                         break;
                     case 3:
+                        albumes = usuario.getAlbums();
                         Album.mostrarAlbumes(albumes);
                         System.out.println("Elija el álbum que desea ver sus músicas (ingrese el número del álbum):");
                         int numeroAlbumConsulta = scanner.nextInt();
@@ -71,7 +73,7 @@ public class Menu {
                     case 4:
                         System.out.println("Por favor, introduce el año del álbum:");
                         String año = scanner.nextLine();
-                        Usuario.listarAlbumsPorAnio(año);
+                        usuario.listarAlbumsPorAnio(año);
                         break;
                     default:
                         System.out.println("Opción no válida. Por favor, ingrese un número válido del menú.");
