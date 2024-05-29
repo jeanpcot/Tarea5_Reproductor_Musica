@@ -10,20 +10,19 @@ public class Album {
     private String disquera;
     private ArrayList<Cancion> canciones;
 
-    public Album(String nombre, String artistas, String añoLanzamiento, String disquera) {
+    public Album(String nombre, String artistas, String anioLanzamiento, String disquera) {
         this.nombre = nombre;
         this.artistas = artistas;
-        this.anioLanzamiento = añoLanzamiento;
+        this.anioLanzamiento = anioLanzamiento;
         this.disquera = disquera;
-        canciones = new ArrayList<>();
+        this.canciones = new ArrayList<>();
     }
 
-    public Album(){}
-
+    public Album() {}
 
     @Override
     public String toString() {
-        return "Album{" +
+        return "Album { " +
                 "disquera='" + disquera + '\'' +
                 ", añoLanzamiento='" + anioLanzamiento + '\'' +
                 ", nombre='" + nombre + '\'' +
@@ -31,32 +30,28 @@ public class Album {
     }
 
     public void obtenerListaDeMusicas() {
-        // Quiero mostrar las canciones
         for (Cancion cancion : canciones) {
             System.out.println(cancion);
         }
     }
 
     public void obtenerDuracionTotal() {
-        // Quiero obtener la duración total de las canciones y sumarlas
         int minutosTotales = 0;
         int segundosTotales = 0;
 
         for (Cancion cancion : canciones) {
-            minutosTotales+=cancion.obtenerMinutos();
-            segundosTotales+=cancion.obtenerSegundos();
+            minutosTotales += cancion.obtenerMinutos();
+            segundosTotales += cancion.obtenerSegundos();
         }
 
-        minutosTotales += segundosTotales/60;
-
-        segundosTotales = segundosTotales%60;
+        minutosTotales += segundosTotales / 60;
+        segundosTotales = segundosTotales % 60;
 
         System.out.println("Minutos: " + minutosTotales);
         System.out.println("Segundos: " + segundosTotales);
     }
 
     public String getAño() {
-
         return anioLanzamiento;
     }
 
@@ -84,32 +79,43 @@ public class Album {
         }
         return false; // La canción no existe en el album
     }
-    public void agregarCancion(Cancion cancion){
-        if(existeCancionEnElAlbum(cancion)){
-            System.out.println("La cancion: "+cancion.getTitulo()+"ya existe en el album");
+
+    public void agregarCancion(Cancion cancion) {
+        if (existeCancionEnElAlbum(cancion)) {
             return;
         }
         canciones.add(cancion);
     }
-    public Cancion llenarCancion(){
+
+    public Cancion crearCancion() {
         Scanner scanner = new Scanner(System.in);
-        Cancion cancion = new Cancion();
-        System.out.println("Ingrese el titulo: ");
-        cancion.setTitulo(scanner.nextLine());
-        System.out.println("Ingrese la duracion en minutos: ");
-        cancion.setDuracionMinutos(scanner.nextInt());
-        System.out.println("Ingrese la duracion en segundos: ");
-        cancion.setDuracionSegundos(scanner.nextInt());
-        return cancion;
+        System.out.println("Por favor, introduce el título de la canción:");
+        String titulo = scanner.nextLine();
+        System.out.println("Por favor, introduce la duración de la canción en minutos y segundos (separados por un espacio):");
+        String[] duracionStr = scanner.nextLine().split(" ");
+        int[] duracion = {Integer.parseInt(duracionStr[0]), Integer.parseInt(duracionStr[1])};
+        return new Cancion(titulo, duracion);
     }
-    public void registrarCancion(){
-        Cancion cancion = llenarCancion();
+
+    public void registrarCancion() {
+        Cancion cancion = crearCancion();
+
+        if (existeCancionEnElAlbum(cancion)) {
+            System.out.println("La canción: " + cancion.getTitulo() + " ya existe en el álbum");
+            return;
+        }
+
         agregarCancion(cancion);
+        System.out.println("Canción agregada exitosamente!");
     }
-
-
 
     public ArrayList<Cancion> getCanciones() {
         return canciones;
+    }
+
+    public static void mostrarAlbumes(ArrayList<Album> albumes) {
+        for (int i = 0; i < albumes.size(); i++) {
+            System.out.println((i + 1) + ". " + albumes.get(i).toString());
+        }
     }
 }
