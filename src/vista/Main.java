@@ -1,5 +1,8 @@
 package vista;
-
+/**
+ * @author JJC
+ * @version 1.0.0
+ */
 
 import logica.Menu;
 

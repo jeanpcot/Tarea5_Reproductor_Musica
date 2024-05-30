@@ -9,8 +9,10 @@ import java.util.Scanner;
 
 public class Menu {
     private Usuario usuario;
+
     public Menu() {
     }
+
     public void mostrarMenu() {
         System.out.println("""
                 Opciones:
@@ -21,12 +23,14 @@ public class Menu {
                     0. Salir
                 """);
     }
-    public void registrarse(Scanner scanner){
+
+    public void registrarse(Scanner scanner) {
         System.out.println("Ingresa tu nombre: ");
         String nombre = scanner.nextLine();
         usuario = new Usuario(nombre);
 
     }
+
     public void ejecutarMenu() {
         Scanner scanner = new Scanner(System.in);
         registrarse(scanner);
