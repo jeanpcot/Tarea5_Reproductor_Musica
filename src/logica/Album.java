@@ -51,7 +51,7 @@ public class Album {
         System.out.println("Segundos: " + segundosTotales);
     }
 
-    public String getAño() {
+    public String getAnio() {
         return anioLanzamiento;
     }
 
@@ -87,8 +87,7 @@ public class Album {
         canciones.add(cancion);
     }
 
-    public Cancion crearCancion() {
-        Scanner scanner = new Scanner(System.in);
+    public Cancion crearCancion(Scanner scanner) {
         System.out.println("Por favor, introduce el título de la canción:");
         String titulo = scanner.nextLine();
         System.out.println("Por favor, introduce la duración de la canción en minutos y segundos (separados por un espacio):");
@@ -97,8 +96,8 @@ public class Album {
         return new Cancion(titulo, duracion);
     }
 
-    public void registrarCancion() {
-        Cancion cancion = crearCancion();
+    public void registrarCancion(Scanner scanner) {
+        Cancion cancion = crearCancion(scanner);
 
         if (existeCancionEnElAlbum(cancion)) {
             System.out.println("La canción: " + cancion.getTitulo() + " ya existe en el álbum");
@@ -113,9 +112,4 @@ public class Album {
         return canciones;
     }
 
-    public static void mostrarAlbumes(ArrayList<Album> albumes) {
-        for (int i = 0; i < albumes.size(); i++) {
-            System.out.println((i + 1) + ". " + albumes.get(i).toString());
-        }
-    }
 }
