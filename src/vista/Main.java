@@ -1,14 +1,11 @@
-import logica.Album;
-import logica.Usuario;
+package vista;
 
-import java.awt.*;
-import java.util.Scanner;
+
+import logica.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Usuario usuario = new Usuario("Jose");
-        Menu menu = new Menu(usuario, scanner);
+        Menu menu = new Menu();
         menu.ejecutarMenu();
     }
 }

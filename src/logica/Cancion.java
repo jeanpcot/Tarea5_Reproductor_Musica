@@ -39,7 +39,7 @@ public class Cancion {
     public String toString() {
         return "Cancion{" +
                 "titulo='" + titulo + '\'' +
-                ", duracion=" + Arrays.toString(duracion) +
+                ", duracion {minutos,segundos}=" + Arrays.toString(duracion) +
                 '}';
     }
 }
